@@ -54,3 +54,5 @@ class MsgPackSerializer(Serializer):
         tmp = MsgPackSerializer()
         tmp.__mapper = self.__mapper.copy()
         return tmp
+
+
