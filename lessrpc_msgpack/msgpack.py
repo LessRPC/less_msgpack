@@ -3,9 +3,9 @@ Created on Jan 21, 2018
 
 @author: Salim
 '''
-from lessrpc.common.serialize import Serializer
+from lessrpc_common.serialize import Serializer
 from pylods.deserialize import DeserializationContext
-from lessrpc.common.info.basic import SerializationFormat
+from lessrpc_common.info.basic import SerializationFormat
 from pylodsmsgpack.pylodsmsgpack import MsgPackObjectMapper, MsgPackParser
 
 
