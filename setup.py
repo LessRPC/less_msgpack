@@ -12,5 +12,5 @@ setup(
   download_url = 'https://github.com/LessRPC/less_msgpack/archive/1.0.0.tar.gz', # I'll explain this in a second
   keywords = ['python','serialization','deserialization','rpc','rmi','less rpc', 'client', 'server'], # arbitrary keywords
   classifiers = ['Programming Language :: Python '],
-  install_requires=['pylods','pylods_msgpack'],
+  install_requires=['pylods','pylods_msgpack', 'lessrpc-common'],
 )
