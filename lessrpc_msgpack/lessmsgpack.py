@@ -6,7 +6,9 @@ Created on Jan 21, 2018
 from lessrpc_common.serialize import Serializer
 from pylods.deserialize import DeserializationContext
 from lessrpc_common.info.basic import SerializationFormat
-from pylodsmsgpack.pylodsmsgpack import MsgPackObjectMapper, MsgPackParser
+from pylodsmsgpack.pylodsmsgpack import MsgPackObjectMapper, MsgPackParser,\
+    MsgPackDictionary
+import msgpackstream.backend.python.stream as msgpackp
 import base64
 
 
@@ -76,8 +78,10 @@ class MsgPackSerializer(Serializer):
     
     __slots__ = ['__mapper']
     
-    def __init__(self, mapper=MsgPackObjectMapper()):
-        self.__mapper = mapper
+    def __init__(self, msgpack=msgpackp):
+        pdict = MsgPackDictionary(msgpack)
+        self.__mapper = MsgPackObjectMapper(pdict)
+        self.__parser = MsgPackParser(pdict)
         
     
     def serialize(self, obj, cls, outstream): 
@@ -102,8 +106,7 @@ class MsgPackSerializer(Serializer):
         '''
         if not isinstance(instream, InBase64Wrapper):
             instream = InBase64Wrapper(instream)
-        parser = MsgPackParser()
-        parser = parser.parse(instream)
+        parser = self.__parser.parse(instream)
         return self.__mapper.read_obj(parser, cls, ctxt=ctxt)
         
     def get_type(self):
@@ -117,6 +120,7 @@ class MsgPackSerializer(Serializer):
     def copy(self):
         tmp = MsgPackSerializer()
         tmp.__mapper = self.__mapper.copy()
+        tmp.__parser = self.__mapper.copy()
         return tmp
 
 
