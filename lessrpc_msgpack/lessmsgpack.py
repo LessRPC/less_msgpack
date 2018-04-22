@@ -10,6 +10,7 @@ from pylodsmsgpack.pylodsmsgpack import MsgPackObjectMapper, MsgPackParser,\
     MsgPackDictionary
 import msgpackstream.backend.python.stream as msgpackp
 import base64
+from pylods.backend.pylodsp.mapper import PyObjectMapper
 
 
 
@@ -78,9 +79,9 @@ class MsgPackSerializer(Serializer):
     
     __slots__ = ['__mapper']
     
-    def __init__(self, msgpack=msgpackp):
+    def __init__(self, msgpack=msgpackp, backend=PyObjectMapper(MsgPackDictionary(msgpackp))):
         pdict = MsgPackDictionary(msgpack)
-        self.__mapper = MsgPackObjectMapper(pdict)
+        self.__mapper = MsgPackObjectMapper(backend)
         self.__parser = MsgPackParser(pdict)
         
     
